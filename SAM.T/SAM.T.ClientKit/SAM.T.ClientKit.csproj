@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>SAM.T.ClientKit</PackageId>
+    <Title>SAM.T ClientKit</Title>
+    <Version>0.1</Version>
+    <Authors>unwild</Authors>
+    <PackageProjectUrl>https://github.com/unwild/SAM.T</PackageProjectUrl>
+    <Copyright>Copyright (c) 2024 Hugo R</Copyright>
+    <Description>Simple application monitoring tool client lib. used to expose SAM.T healthcheck response to SAM.T agent.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/unwild/SAM.T</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SAM.T.Protocol\SAM.T.Protocol.csproj" />
+  </ItemGroup>
+
+</Project>

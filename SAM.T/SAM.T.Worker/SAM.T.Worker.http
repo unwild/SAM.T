@@ -1,0 +1,6 @@
+@SAM.T.Worker_HostAddress = http://localhost:5240
+
+POST {{SAM.T.Worker_HostAddress}}/trigger/
+Accept: application/json
+
+###

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>SAM.T.Protocol</Title>
+    <PackageId>SAM.T.Protocol</PackageId>
+    <Company>unwild</Company>
+    <Authors>unwild</Authors>
+    <Description>Models exchanged between SAM.T agent and client</Description>
+    <Copyright>Copyright (c) 2024 Hugo R</Copyright>
+    <PackageProjectUrl>https://github.com/unwild/SAM.T</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/unwild/SAM.T</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

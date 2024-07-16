@@ -1,0 +1,6 @@
+@SAM.T.ExampleAp_HostAddress = http://localhost:5134
+
+GET {{SAM.T.ExampleAp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,43 @@
+﻿@page "/home"
+@using SAM.T.Protocol
+@inject HttpClient Http
+
+<PageTitle>Dashboard</PageTitle>
+
+<h1>Dashboard</h1>
+
+@if (appStates == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Application name</th>
+                <th>State</th>
+                <th>Time deviation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appState in appStates)
+            {
+                <tr>
+                    <td>@appState.ApplicationName</td>
+                    <td>@appState.State</td>
+                    <td>@appState.ResponseTimeDeviation</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private MonitoringState[]? appStates;
+
+    protected override async Task OnInitializedAsync()
+    {
+        appStates = await Http.GetFromJsonAsync<MonitoringState[]>("https://localhost:7177/monitor");
+    }
+}
