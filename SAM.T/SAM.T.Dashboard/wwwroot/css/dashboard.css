@@ -1,0 +1,15 @@
+.dashboard-container{
+    display:flex;
+    gap: .5em;
+}
+
+.app-card {
+
+    border: 1px solid grey;
+    border-radius: 10px;
+
+    padding: 1em;
+
+    min-width: 15em;
+
+}

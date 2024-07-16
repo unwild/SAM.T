@@ -6,32 +6,29 @@
 
 <h1>Dashboard</h1>
 
-@if (appStates == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Application name</th>
-                <th>State</th>
-                <th>Time deviation</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var appState in appStates)
-            {
-                <tr>
-                    <td>@appState.ApplicationName</td>
-                    <td>@appState.State</td>
-                    <td>@appState.ResponseTimeDeviation</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<div class="dashboard-container">
+
+    @if (appStates == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+
+        @foreach (var appState in appStates)
+        {
+            <div class="app-card state-@appState.State">
+
+                <h3>@appState.ApplicationName</h3>
+                <h6>State : @appState.State</h6>
+                <h6>Response time : @appState.ResponseTimeDeviation</h6>
+
+            </div>
+        }
+
+    }
+
+</div>
 
 @code {
     private MonitoringState[]? appStates;
