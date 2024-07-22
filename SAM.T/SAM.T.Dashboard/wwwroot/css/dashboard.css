@@ -1,15 +1,27 @@
-.dashboard-container{
-    display:flex;
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
     gap: .5em;
+    justify-content: flex-start;
 }
 
 .app-card {
-
     border: 1px solid grey;
     border-radius: 10px;
-
     padding: 1em;
 
     min-width: 15em;
+    flex-basis: auto;
+}
 
+.state-operational {
+    background-color: #C8E6C9;
+}
+
+.state-degraded {
+    background-color: #ffd480;
+}
+
+.state-error {
+    background-color: #ff7961;
 }

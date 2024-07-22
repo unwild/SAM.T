@@ -12,7 +12,7 @@ public class MonitoringResult
 
     public int ResponseCode { get; set; }
 
-    public HealthState? State { get; set; }
+    public HealthState State { get; set; }
 
     public string? Message { get; set; }
 

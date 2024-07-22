@@ -1,4 +1,4 @@
-﻿@page "/home"
+﻿@page "/"
 @using SAM.T.Protocol
 @inject HttpClient Http
 
@@ -17,7 +17,7 @@
 
         @foreach (var appState in appStates)
         {
-            <div class="app-card state-@appState.State">
+            <div class="app-card state-@(appState.State.ToString()?.ToLower() ?? "neutral")">
 
                 <h3>@appState.ApplicationName</h3>
                 <h6>State : @appState.State</h6>

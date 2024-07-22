@@ -5,7 +5,7 @@ namespace SAM.T.Protocol
     {
         public string ApplicationName { get; set; }
 
-        public HealthState? State { get; set; }
+        public HealthState State { get; set; }
 
         public string Message { get; set; }
 

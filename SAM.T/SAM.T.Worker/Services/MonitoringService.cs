@@ -117,7 +117,13 @@ public class MonitoringService
 
     private static MonitoringResult FromException(Exception ex, MonitoredApplication app)
     {
-        return new MonitoringResult { MonitoredApplicationId = app.Id, Fail = ex.Message, Time = DateTime.UtcNow };
+        return new MonitoringResult
+        {
+            MonitoredApplicationId = app.Id,
+            State = HealthState.Error,
+            Fail = ex.Message,
+            Time = DateTime.UtcNow
+        };
     }
 
     private static MonitoringState ToMonitoringState(MonitoringResult mr)
