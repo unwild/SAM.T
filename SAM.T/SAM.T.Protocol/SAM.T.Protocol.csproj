@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>SAM.T.Protocol</Title>
-    <PackageId>SAM.T.Protocol</PackageId>
+	<Version>1.01</Version>
+	<PackageId>SAM.T.Protocol</PackageId>
     <Company>unwild</Company>
     <Authors>unwild</Authors>
     <Description>Models exchanged between SAM.T agent and client</Description>
