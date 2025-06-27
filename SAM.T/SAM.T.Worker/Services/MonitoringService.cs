@@ -48,7 +48,8 @@ public class MonitoringService
             .GroupBy(mr => mr.MonitoredApplicationId)
             .Select(gr => gr.OrderByDescending(g => g.Time).First())
             .ToListAsync())
-            .Select(mr => ToMonitoringState(mr)).ToArray();
+            .Select(ToMonitoringState)
+            .ToArray();
     }
 
     private async Task<MonitoringResult> RequestAndGetResult(MonitoredApplication app)
@@ -134,7 +135,8 @@ public class MonitoringService
             State = mr.State,
             Fail = mr.Message,
             ResponseTimeDeviation = GetResponseTimeState(mr.ResponseTimeDeviation),
-            Message = mr.Message
+            Message = mr.Message,
+            LastUpdate = mr.Time,
         };
     }
 

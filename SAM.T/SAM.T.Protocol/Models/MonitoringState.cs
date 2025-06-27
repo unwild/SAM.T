@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace SAM.T.Protocol
 {
     public class MonitoringState
@@ -12,5 +14,7 @@ namespace SAM.T.Protocol
         public string Fail { get; set; }
 
         public ResponseTimeState ResponseTimeDeviation { get; set; }
+
+        public DateTime LastUpdate { get; set; }
     }
 }
