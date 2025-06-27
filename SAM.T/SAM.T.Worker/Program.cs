@@ -59,6 +59,13 @@ static void HandleRoutes(WebApplication app)
     {
         return Results.Json(await monitoringService.GetRecords());
     })
-    .WithName("Get applications monitor data")
+    .WithName("Get applications top level monitoring data")
+    .WithOpenApi();
+
+    app.MapGet("/monitor/{appId}", async (int appId, MonitoringService monitoringService) =>
+    {
+        return Results.Json(await monitoringService.GetDetails(appId));
+    })
+    .WithName("Get application in-depth monitoring data")
     .WithOpenApi();
 }

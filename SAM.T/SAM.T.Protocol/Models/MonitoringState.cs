@@ -5,6 +5,8 @@ namespace SAM.T.Protocol
 {
     public class MonitoringState
     {
+        public int ApplicationId { get; set; }
+
         public string ApplicationName { get; set; }
 
         public HealthState State { get; set; }

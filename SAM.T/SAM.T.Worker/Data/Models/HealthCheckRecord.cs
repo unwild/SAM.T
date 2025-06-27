@@ -8,12 +8,11 @@ public class HealthCheckRecord
     [Key]
     public int Id { get; set; }
 
-    public string? Feature { get; set; }
+    public required string Feature { get; set; }
 
-    public HealthState? State { get; set; }
+    public HealthState State { get; set; }
 
     public string? Message { get; set; }
-
 
     public int MonitoringResultId { get; set; }
 

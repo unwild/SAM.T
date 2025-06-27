@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SAM.T.Protocol;
+using SAM.T.Protocol.Models;
 using SAM.T.Worker.Data;
 using SAM.T.Worker.Data.Models;
 using System.Diagnostics;
@@ -50,6 +51,48 @@ public class MonitoringService
             .ToListAsync())
             .Select(ToMonitoringState)
             .ToArray();
+    }
+
+    public async Task<MonitoringDetails[]> GetDetails(int appId)
+    {
+        var monitoringResults = await _context.MonitoringResults
+            .Include(mr => mr.Inner)
+            .Where(mr => mr.MonitoredApplicationId == appId)
+            .OrderByDescending(mr => mr.Time)
+            .Select(mr => mr.Inner)
+            .FirstOrDefaultAsync();
+
+        List<MonitoringDetails> details = [];
+
+        //TODO Optimize
+        foreach (var result in monitoringResults ?? [])
+        {
+            var lastStatusChange = GetLastStatusChange(appId, result.Feature, result.State);
+
+            details.Add(new MonitoringDetails
+            {
+                Feature = result.Feature,
+                State = result.State,
+                Message = result.Message,
+                LastStatusChange = lastStatusChange?.time ?? null,
+                LastStatusState = lastStatusChange?.state ?? result.State,
+            });
+        }
+
+        return details.ToArray();
+    }
+
+    private (DateTime time, HealthState state)? GetLastStatusChange(int appId, string feature, HealthState healthState)
+    {
+        var record = _context.HealthCheckRecords
+            .Where(hcr => hcr.MonitoringResult.MonitoredApplicationId == appId && hcr.Feature == feature && hcr.State != healthState)
+            .OrderByDescending(hcr => hcr.MonitoringResult.Time)
+            .FirstOrDefault();
+
+        if (record is null)
+            return null;
+
+        return (record.MonitoringResult.Time, record.State);
     }
 
     private async Task<MonitoringResult> RequestAndGetResult(MonitoredApplication app)
@@ -131,9 +174,10 @@ public class MonitoringService
     {
         return new MonitoringState
         {
+            ApplicationId = mr.MonitoredApplicationId,
             ApplicationName = mr.MonitoredApplication.Name,
             State = mr.State,
-            Fail = mr.Message,
+            Fail = mr.Fail,
             ResponseTimeDeviation = GetResponseTimeState(mr.ResponseTimeDeviation),
             Message = mr.Message,
             LastUpdate = mr.Time,
