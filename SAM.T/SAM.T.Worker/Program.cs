@@ -21,6 +21,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSingleton<HttpClientService>();
 builder.Services.AddTransient<MonitoringService>();
+builder.Services.AddTransient<MonitoredApplicationsService>();
 builder.Services.AddTransient<AnalyticsService>();
 
 builder.Services.AddDbContext<MonitoringContext>(opt

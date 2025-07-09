@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SAM.T.Protocol.Models;
 using SAM.T.Worker.Services;
 
 namespace SAM.T.Worker;
@@ -7,6 +8,14 @@ public static class Routes
 {
     public static void Register(WebApplication app)
     {
+        app.MapPost("/application", async (ApplicationCreation app, MonitoredApplicationsService applicationsService) =>
+        {
+            var createdApp = await applicationsService.Create(app);
+            return Results.Json(createdApp, statusCode: 201);
+        })
+        .WithName("Create a new application to monitor")
+        .WithOpenApi();
+
         app.MapPost("/trigger", async (MonitoringService monitoringService) =>
         {
             await monitoringService.Execute();
