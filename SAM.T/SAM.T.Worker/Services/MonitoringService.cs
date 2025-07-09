@@ -121,6 +121,7 @@ public class MonitoringService
 
         var result = new MonitoringResult
         {
+            State = response.IsSuccessStatusCode ? HealthState.Operational : HealthState.Error,
             MonitoredApplicationId = app.Id,
             Time = DateTime.UtcNow,
             ResponseCode = (int)response.StatusCode,
@@ -205,5 +206,24 @@ public class MonitoringService
 
             return ResponseTimeState.BlazinglyFast;
         }
+    }
+
+    public async Task<List<ApplicationAvailability>> GetAvailability(int appId, int days)
+    {
+        var startDate = DateTime.UtcNow.AddDays(-days).Date;
+
+        var allResults = await _context.MonitoringResults
+            .Where(mr => mr.MonitoredApplicationId == appId && mr.Time >= startDate)
+            .ToListAsync();
+
+        return allResults
+            .GroupBy(mr => mr.Time.Date)
+            .Select(g => new ApplicationAvailability { Date = g.Key, Availability = CalculateAvailability(g.ToList()) })
+            .ToList();
+    }
+
+    private static float CalculateAvailability(List<MonitoringResult> monitoringResults)
+    {
+        return (float)monitoringResults.Count(mr => mr.State == HealthState.Operational) / monitoringResults.Count;
     }
 }

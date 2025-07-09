@@ -41,7 +41,7 @@ namespace SAM.T.Worker.Configuration
                 Name = "ExampleApp",
                 Environment = "dev",
                 Url = "https://localhost:7042",
-                Endpoint = "/health",
+                Endpoint = "https://localhost:7042/health",
                 UseProxy = false 
             });
 
