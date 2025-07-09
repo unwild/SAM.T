@@ -9,6 +9,10 @@ namespace SAM.T.Protocol
 
         public string ApplicationName { get; set; }
 
+        public string ApplicationEnvironment { get; set; }
+
+        public string ApplicationUrl { get; set; }
+
         public HealthState State { get; set; }
 
         public string Message { get; set; }

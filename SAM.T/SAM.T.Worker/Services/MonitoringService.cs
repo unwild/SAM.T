@@ -100,7 +100,7 @@ public class MonitoringService
         HttpRequestMessage req = new()
         {
             Method = HttpMethod.Get,
-            RequestUri = new Uri(app.Url)
+            RequestUri = new Uri(app.Endpoint)
         };
 
         var stopWatch = Stopwatch.StartNew();
@@ -176,6 +176,8 @@ public class MonitoringService
         {
             ApplicationId = mr.MonitoredApplicationId,
             ApplicationName = mr.MonitoredApplication.Name,
+            ApplicationEnvironment = mr.MonitoredApplication.Environment,
+            ApplicationUrl = mr.MonitoredApplication.Url,
             State = mr.State,
             Fail = mr.Fail,
             ResponseTimeDeviation = GetResponseTimeState(mr.ResponseTimeDeviation),

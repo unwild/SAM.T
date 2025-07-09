@@ -9,7 +9,17 @@ public class MonitoredApplication
 
     public required string Name { get; set; }
 
+    public required string Environment { get; set; }
+
+    /// <summary>
+    /// The URL of the application to monitor.
+    /// </summary>
     public required string Url { get; set; }
+
+    /// <summary>
+    /// The application healthcheck endpoint.
+    /// </summary>
+    public required string Endpoint { get; set; }
 
     public required bool UseProxy { get; set; } = false;
 

@@ -37,8 +37,21 @@ namespace SAM.T.Worker.Configuration
             if (context.MonitoredApplications.Any())
                 return;
 
-            context.MonitoredApplications.Add(new MonitoredApplication { Name = "ExampleApp", Url = "https://localhost:7042/health", UseProxy = false });
-            context.MonitoredApplications.Add(new MonitoredApplication { Name = "Google", Url = "https://google.com", UseProxy = false });
+            context.MonitoredApplications.Add(new MonitoredApplication { 
+                Name = "ExampleApp",
+                Environment = "dev",
+                Url = "https://localhost:7042",
+                Endpoint = "/health",
+                UseProxy = false 
+            });
+
+            context.MonitoredApplications.Add(new MonitoredApplication {
+                Name = "Google",
+                Environment = "prod",
+                Url = "https://google.com",
+                Endpoint = "https://google.com",
+                UseProxy = false 
+            });
 
             context.SaveChanges();
         }
