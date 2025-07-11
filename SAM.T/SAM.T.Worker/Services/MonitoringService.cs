@@ -42,6 +42,21 @@ public class MonitoringService
         await _analyticsService.Analyse();
     }
 
+    public async Task Execute(int monitoredApplicationId)
+    {
+        var app = await _context.MonitoredApplications.FindAsync(monitoredApplicationId);
+
+        if(app == null)
+            throw new ArgumentException($"Monitored application with ID {monitoredApplicationId} not found.");
+
+        var result = await RequestAndGetResult(app);
+        _context.MonitoringResults.Add(result);
+
+        await _context.SaveChangesAsync();
+
+        await _analyticsService.Analyse();
+    }
+
     public async Task<MonitoringState[]> GetRecords()
     {
         return (await _context.MonitoringResults
