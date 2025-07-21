@@ -196,6 +196,7 @@ public class MonitoringService
             ApplicationUrl = mr.MonitoredApplication.Url,
             State = mr.State,
             Fail = mr.Fail,
+            ResponseTime = mr.ResponseTime,
             ResponseTimeDeviation = GetResponseTimeState(mr.ResponseTimeDeviation),
             Message = mr.Message,
             LastUpdate = mr.Time,

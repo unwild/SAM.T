@@ -19,6 +19,8 @@ namespace SAM.T.Protocol
 
         public string Fail { get; set; }
 
+        public long ResponseTime { get; set; }
+
         public ResponseTimeState ResponseTimeDeviation { get; set; }
 
         public DateTime LastUpdate { get; set; }
