@@ -35,7 +35,7 @@ public class MonitoredApplicationsService
         await _context.SaveChangesAsync();
 
         // Trigger immediate monitoring for the newly created application
-        await _monitoringService.Execute(app.Id);    
+        await _monitoringService.Execute(app.Id);
 
         return app.Id;
     }

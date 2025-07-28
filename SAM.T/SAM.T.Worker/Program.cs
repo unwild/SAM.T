@@ -15,7 +15,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "dashboardPolicy", policy =>
     {
-        policy.WithOrigins(config.GetValue<string>("FrontUrl" ?? throw new ArgumentException("Front url is not defined in application configuration !"))!);
+        policy.WithOrigins(config.GetValue<string>("FrontUrl" ?? throw new ArgumentException("Front url is not defined in application configuration !"))!)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
     });
 });
 

@@ -100,6 +100,7 @@ public class MonitoringService
     private (DateTime time, HealthState state)? GetLastStatusChange(int appId, string feature, HealthState healthState)
     {
         var record = _context.HealthCheckRecords
+            .Include(hcr => hcr.MonitoringResult)
             .Where(hcr => hcr.MonitoringResult.MonitoredApplicationId == appId && hcr.Feature == feature && hcr.State != healthState)
             .OrderByDescending(hcr => hcr.MonitoringResult.Time)
             .FirstOrDefault();
