@@ -32,7 +32,7 @@ builder.Services.AddDbContext<MonitoringContext>(opt
 var app = builder.Build();
 
 app.MigrateDatabase();
-app.SeedDatabase();
+await app.SeedDatabase();
 
 if (app.Environment.IsDevelopment())
 {
