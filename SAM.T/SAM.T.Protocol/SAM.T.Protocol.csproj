@@ -5,7 +5,7 @@
 	<LangVersion>8.0</LangVersion>
 	<Nullable>enable</Nullable>   
     <Title>SAM.T.Protocol</Title>
-	<Version>1.2.0</Version>
+	<Version>1.2.1</Version>
 	<PackageId>SAM.T.Protocol</PackageId>
     <Company>unwild</Company>
     <Authors>unwild</Authors>
