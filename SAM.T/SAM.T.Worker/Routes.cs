@@ -26,14 +26,14 @@ public static class Routes
 
         app.MapGet("/monitor", async (MonitoringService monitoringService) =>
         {
-            return Results.Json(await monitoringService.GetRecords());
+            return Results.Json(await monitoringService.GetMonitoringStates());
         })
         .WithName("Get applications top level monitoring data")
         .WithOpenApi();
 
         app.MapGet("/monitor/{appId}", async (int appId, MonitoringService monitoringService) =>
         {
-            return Results.Json(await monitoringService.GetDetails(appId));
+            return Results.Json(await monitoringService.GetMonitoredApplicationInfo(appId));
         })
         .WithName("Get application in-depth monitoring data")
         .WithOpenApi();
