@@ -46,7 +46,7 @@ public class MonitoringService
     {
         var app = await _context.MonitoredApplications.FindAsync(monitoredApplicationId);
 
-        if(app == null)
+        if (app == null)
             throw new ArgumentException($"Monitored application with ID {monitoredApplicationId} not found.");
 
         var result = await RequestAndGetResult(app);
@@ -57,7 +57,7 @@ public class MonitoringService
         await _analyticsService.Analyse();
     }
 
-    public async Task<MonitoringState[]> GetRecords()
+    public async Task<MonitoringState[]> GetMonitoringStates()
     {
         return (await _context.MonitoringResults
             .Include(mr => mr.MonitoredApplication)
@@ -68,8 +68,16 @@ public class MonitoringService
             .ToArray();
     }
 
-    public async Task<MonitoringDetails[]> GetDetails(int appId)
+    public async Task<MonitoredApplicationInfo> GetMonitoredApplicationInfo(int appId)
     {
+        var monitoringResult = await _context.MonitoringResults
+            .Include(mr => mr.MonitoredApplication)
+            .Where(mr => mr.MonitoredApplicationId == appId)
+            .OrderByDescending(g => g.Time)
+            .FirstOrDefaultAsync() ?? throw new ArgumentException($"No monitoring result for application {appId} found.");
+
+        var state = ToMonitoringState(monitoringResult);
+
         var monitoringResults = await _context.MonitoringResults
             .Include(mr => mr.Inner)
             .Where(mr => mr.MonitoredApplicationId == appId)
@@ -94,7 +102,7 @@ public class MonitoringService
             });
         }
 
-        return details.ToArray();
+        return new MonitoredApplicationInfo { ApplicationState = state, Details = details.ToArray() };
     }
 
     private (DateTime time, HealthState state)? GetLastStatusChange(int appId, string feature, HealthState healthState)

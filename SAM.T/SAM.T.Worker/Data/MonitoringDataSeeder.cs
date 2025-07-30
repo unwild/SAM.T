@@ -33,8 +33,8 @@ public class MonitoringDataSeeder(MonitoringContext context)
         foreach (var app in applications)
         {
             appThresholds.Add(app.Id, new AppThreshold(
-                DegradedThreshold: _random.NextDouble() * (15f / 100) + (5f / 100), // between 5% and 20%
-                ErrorThreshold: _random.NextDouble() * (5f / 100) // between 0% and 5%
+                DegradedThreshold: _random.NextDouble() * (20f / 100) + (5f / 100), // between 5% and 25%
+                ErrorThreshold: _random.NextDouble() * (10f / 100) // between 0% and 10%
             ));
         }
 

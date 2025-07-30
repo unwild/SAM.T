@@ -7,6 +7,6 @@ namespace SAM.T.Protocol
 
         public HealthState State { get; set; }
 
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 }
