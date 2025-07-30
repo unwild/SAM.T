@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>SAM.T.ClientKit</PackageId>
     <Title>SAM.T ClientKit</Title>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
     <Authors>unwild</Authors>
     <PackageProjectUrl>https://github.com/unwild/SAM.T</PackageProjectUrl>
     <Copyright>Copyright (c) 2024 Hugo R</Copyright>
