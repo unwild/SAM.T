@@ -44,5 +44,6 @@ public static class Routes
         })
         .WithName("Get application availability records")
         .WithOpenApi();
+
     }
 }

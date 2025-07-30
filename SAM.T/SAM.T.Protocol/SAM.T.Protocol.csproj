@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+	<LangVersion>8.0</LangVersion>
+	<Nullable>enable</Nullable>   
     <Title>SAM.T.Protocol</Title>
 	<Version>1.2.0</Version>
 	<PackageId>SAM.T.Protocol</PackageId>

@@ -42,6 +42,21 @@ public class MonitoringService
         await _analyticsService.Analyse();
     }
 
+    public async Task Execute(int monitoredApplicationId)
+    {
+        var app = await _context.MonitoredApplications.FindAsync(monitoredApplicationId);
+
+        if(app == null)
+            throw new ArgumentException($"Monitored application with ID {monitoredApplicationId} not found.");
+
+        var result = await RequestAndGetResult(app);
+        _context.MonitoringResults.Add(result);
+
+        await _context.SaveChangesAsync();
+
+        await _analyticsService.Analyse();
+    }
+
     public async Task<MonitoringState[]> GetRecords()
     {
         return (await _context.MonitoringResults
@@ -85,6 +100,7 @@ public class MonitoringService
     private (DateTime time, HealthState state)? GetLastStatusChange(int appId, string feature, HealthState healthState)
     {
         var record = _context.HealthCheckRecords
+            .Include(hcr => hcr.MonitoringResult)
             .Where(hcr => hcr.MonitoringResult.MonitoredApplicationId == appId && hcr.Feature == feature && hcr.State != healthState)
             .OrderByDescending(hcr => hcr.MonitoringResult.Time)
             .FirstOrDefault();
@@ -181,6 +197,7 @@ public class MonitoringService
             ApplicationUrl = mr.MonitoredApplication.Url,
             State = mr.State,
             Fail = mr.Fail,
+            ResponseTime = mr.ResponseTime,
             ResponseTimeDeviation = GetResponseTimeState(mr.ResponseTimeDeviation),
             Message = mr.Message,
             LastUpdate = mr.Time,

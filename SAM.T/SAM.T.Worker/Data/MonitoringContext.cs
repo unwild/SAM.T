@@ -11,4 +11,11 @@ public class MonitoringContext(DbContextOptions<MonitoringContext> options) : Db
 
     public DbSet<HealthCheckRecord> HealthCheckRecords { get; set; }
 
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder
+            .Properties<DateTime>()
+            .HaveConversion<UtcDateTimeConverter>()
+            .HaveColumnType("timestamp with time zone");
+    }
 }
