@@ -16,6 +16,30 @@ public static class Routes
         .WithName("Create a new application to monitor")
         .WithOpenApi();
 
+        app.MapGet("/application/{appId}", async (int appId, MonitoredApplicationsService applicationsService) =>
+        {
+            var application = await applicationsService.GetByIdAsync(appId);
+            return application == null ? Results.NotFound() : Results.Json(application);
+        })
+        .WithName("Get application by id")
+        .WithOpenApi();
+
+        app.MapPut("/update/application/{appId}", async (int appId, ApplicationCreation appRequest, MonitoredApplicationsService applicationsService) =>
+        {
+            var updated = await applicationsService.UpdateAsync(appId, appRequest);
+            return updated ? Results.Ok() : Results.NotFound();
+        })
+        .WithName("Update application by id")
+        .WithOpenApi();
+
+        app.MapDelete("/application/{appId}", async (int appId, MonitoredApplicationsService applicationsService) =>
+        {
+            var deleted = await applicationsService.DeleteAsync(appId);
+            return deleted ? Results.NoContent() : Results.NotFound();
+        })
+        .WithName("Delete application by id")
+        .WithOpenApi();
+
         app.MapPost("/trigger", async (MonitoringService monitoringService) =>
         {
             await monitoringService.Execute();

@@ -4,3 +4,51 @@ POST {{SAM.T.Worker_HostAddress}}/trigger/
 Accept: application/json
 
 ###
+
+# Create a new application
+POST {{SAM.T.Worker_HostAddress}}/application
+Content-Type: application/json
+
+{
+  "name": "Test Application",
+  "environment": "Dev",
+  "url": "https://example.com",
+  "endpoint": "/health",
+  "useProxy": false,
+  "proxyUrl": null,
+  "proxyPort": null,
+  "proxyUsername": null,
+  "proxyPassword": null
+}
+
+###
+
+# Get application by ID (replace {id} with actual ID from create response)
+GET {{SAM.T.Worker_HostAddress}}/application/1
+Accept: application/json
+
+###
+
+# Update application by ID
+PUT {{SAM.T.Worker_HostAddress}}/update/application/1
+Content-Type: application/json
+
+{
+  "name": "Updated Test Application",
+  "environment": "Staging",
+  "url": "https://updated-example.com",
+  "endpoint": "/health",
+  "useProxy": false,
+  "proxyUrl": null,
+  "proxyPort": null,
+  "proxyUsername": null,
+  "proxyPassword": null
+}
+
+###
+
+# Delete application by ID
+DELETE {{SAM.T.Worker_HostAddress}}/application/1
+Accept: application/json
+
+###
