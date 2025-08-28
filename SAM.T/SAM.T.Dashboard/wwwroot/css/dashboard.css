@@ -25,3 +25,17 @@
 .state-error {
     background-color: #ff7961;
 }
+
+.tags-container {
+    margin-top: 0.5em;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin: 2px;
+    font-size: 0.8em;
+    color: #333;
+}

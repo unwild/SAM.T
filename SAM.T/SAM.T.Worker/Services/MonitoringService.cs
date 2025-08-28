@@ -61,6 +61,7 @@ public class MonitoringService
     {
         return (await _context.MonitoringResults
             .Include(mr => mr.MonitoredApplication)
+                .ThenInclude(ma => ma.Tags)
             .GroupBy(mr => mr.MonitoredApplicationId)
             .Select(gr => gr.OrderByDescending(g => g.Time).First())
             .ToListAsync())
@@ -72,6 +73,7 @@ public class MonitoringService
     {
         var monitoringResult = await _context.MonitoringResults
             .Include(mr => mr.MonitoredApplication)
+                .ThenInclude(ma => ma.Tags)
             .Where(mr => mr.MonitoredApplicationId == appId)
             .OrderByDescending(g => g.Time)
             .FirstOrDefaultAsync() ?? throw new ArgumentException($"No monitoring result for application {appId} found.");
@@ -209,6 +211,11 @@ public class MonitoringService
             ResponseTimeDeviation = GetResponseTimeState(mr.ResponseTimeDeviation),
             Message = mr.Message,
             LastUpdate = mr.Time,
+            Tags = mr.MonitoredApplication.Tags.Select(t => new SAM.T.Protocol.Models.Tag
+            {
+                Key = t.Key,
+                Value = t.Value
+            }).ToList()
         };
     }
 

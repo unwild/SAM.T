@@ -10,6 +10,8 @@ public class MonitoringContext(DbContextOptions<MonitoringContext> options) : Db
     public DbSet<MonitoringResult> MonitoringResults { get; set; }
 
     public DbSet<HealthCheckRecord> HealthCheckRecords { get; set; }
+    
+    public DbSet<ApplicationTag> ApplicationTags { get; set; }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
