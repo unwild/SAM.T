@@ -30,4 +30,6 @@ public class MonitoredApplication
     public string? ProxyUsername { get; set; }
 
     public string? ProxyPassword { get; set; }
+    
+    public ICollection<ApplicationTag> Tags { get; set; } = new List<ApplicationTag>();
 }

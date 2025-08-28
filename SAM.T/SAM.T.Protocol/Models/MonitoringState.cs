@@ -1,5 +1,7 @@
 ﻿
+using SAM.T.Protocol.Models;
 using System;
+using System.Collections.Generic;
 
 namespace SAM.T.Protocol
 {
@@ -24,5 +26,7 @@ namespace SAM.T.Protocol
         public ResponseTimeState ResponseTimeDeviation { get; set; }
 
         public DateTime LastUpdate { get; set; }
+        
+        public List<Tag> Tags { get; set; } = new List<Tag>();
     }
 }

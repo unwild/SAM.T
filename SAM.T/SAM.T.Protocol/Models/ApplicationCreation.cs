@@ -1,4 +1,8 @@
-﻿namespace SAM.T.Protocol.Models
+﻿using SAM.T.Protocol.Models;
+using System;
+using System.Collections.Generic;
+
+namespace SAM.T.Protocol.Models
 {
     public class ApplicationCreation
     {
@@ -25,5 +29,7 @@
         public string? ProxyUsername { get; set; }
 
         public string? ProxyPassword { get; set; }
+        
+        public List<Tag> Tags { get; set; } = new List<Tag>();
     }
 }

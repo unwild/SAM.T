@@ -28,7 +28,12 @@ public class MonitoredApplicationsService
             ProxyUrl = appRequest.ProxyUrl,
             ProxyPort = appRequest.ProxyPort,
             ProxyUsername = appRequest.ProxyUsername,
-            ProxyPassword = appRequest.ProxyPassword
+            ProxyPassword = appRequest.ProxyPassword,
+            Tags = appRequest.Tags.Select(t => new ApplicationTag
+            {
+                Key = t.Key,
+                Value = t.Value
+            }).ToList()
         };
 
         _context.MonitoredApplications.Add(app);
@@ -43,7 +48,9 @@ public class MonitoredApplicationsService
 
     public async Task<ApplicationCreation?> GetByIdAsync(int appId)
     {
-        var app = await _context.MonitoredApplications.FindAsync(appId);
+        var app = await _context.MonitoredApplications
+            .Include(a => a.Tags)
+            .FirstOrDefaultAsync(a => a.Id == appId);
         
         if (app == null)
             return null;
@@ -58,13 +65,20 @@ public class MonitoredApplicationsService
             ProxyUrl = app.ProxyUrl,
             ProxyPort = app.ProxyPort,
             ProxyUsername = app.ProxyUsername,
-            ProxyPassword = app.ProxyPassword
+            ProxyPassword = app.ProxyPassword,
+            Tags = app.Tags.Select(t => new SAM.T.Protocol.Models.Tag
+            {
+                Key = t.Key,
+                Value = t.Value
+            }).ToList()
         };
     }
 
     public async Task<bool> UpdateAsync(int appId, ApplicationCreation appRequest)
     {
-        var app = await _context.MonitoredApplications.FindAsync(appId);
+        var app = await _context.MonitoredApplications
+            .Include(a => a.Tags)
+            .FirstOrDefaultAsync(a => a.Id == appId);
         
         if (app == null)
             return false;
@@ -78,6 +92,15 @@ public class MonitoredApplicationsService
         app.ProxyPort = appRequest.ProxyPort;
         app.ProxyUsername = appRequest.ProxyUsername;
         app.ProxyPassword = appRequest.ProxyPassword;
+
+        // Update tags - remove existing and add new ones
+        _context.ApplicationTags.RemoveRange(app.Tags);
+        app.Tags = appRequest.Tags.Select(t => new ApplicationTag
+        {
+            Key = t.Key,
+            Value = t.Value,
+            MonitoredApplicationId = appId
+        }).ToList();
 
         await _context.SaveChangesAsync();
 

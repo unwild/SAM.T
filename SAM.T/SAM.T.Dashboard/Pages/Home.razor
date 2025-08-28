@@ -22,6 +22,17 @@
                 <h3>@appState.ApplicationName</h3>
                 <h6>State : @appState.State</h6>
                 <h6>Response time : @appState.ResponseTimeDeviation</h6>
+                
+                @if (appState.Tags.Any())
+                {
+                    <div class="tags-container">
+                        <h6>Tags:</h6>
+                        @foreach (var tag in appState.Tags)
+                        {
+                            <span class="tag">@tag.Key:@tag.Value</span>
+                        }
+                    </div>
+                }
 
             </div>
         }
