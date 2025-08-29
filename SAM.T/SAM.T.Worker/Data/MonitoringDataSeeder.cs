@@ -14,6 +14,17 @@ public class MonitoringDataSeeder(MonitoringContext context)
 
     private static readonly string[] Environments = ["Prod", "Preprod", "Staging", "Dev"];
     private static readonly string[] Features = ["Database", "S3", "Auth API", "Config File", "Third Party API"];
+    
+    // Tag categories for generating sample tags
+    private static readonly string[] TagCategories = ["Team", "Version", "Region", "CriticalityLevel", "BusinessUnit"];
+    private static readonly Dictionary<string, string[]> TagValues = new()
+    {
+        ["Team"] = ["Backend", "Frontend", "DevOps", "Data", "Security"],
+        ["Version"] = ["v1.0", "v1.1", "v1.2", "v2.0", "v2.1"],
+        ["Region"] = ["US-East", "US-West", "EU-Central", "Asia-Pacific"],
+        ["CriticalityLevel"] = ["Critical", "High", "Medium", "Low"],
+        ["BusinessUnit"] = ["Sales", "Marketing", "Support", "Analytics", "Core"]
+    };
 
     private record AppThreshold(double DegradedThreshold, double ErrorThreshold);
 
@@ -50,8 +61,32 @@ public class MonitoringDataSeeder(MonitoringContext context)
             Environment = Environments[_random.Next(Environments.Length)],
             Url = $"https://app{i:D2}.example.com",
             Endpoint = "/health",
-            UseProxy = false
+            UseProxy = false,
+            Tags = GenerateRandomTags()
         }).ToList();
+    }
+
+    private List<ApplicationTag> GenerateRandomTags()
+    {
+        var tags = new List<ApplicationTag>();
+        
+        // Generate 2-4 random tags per application
+        var tagCount = _random.Next(2, 5);
+        var selectedCategories = TagCategories.OrderBy(_ => _random.Next()).Take(tagCount).ToList();
+        
+        foreach (var category in selectedCategories)
+        {
+            var possibleValues = TagValues[category];
+            var value = possibleValues[_random.Next(possibleValues.Length)];
+            
+            tags.Add(new ApplicationTag
+            {
+                Key = category,
+                Value = value
+            });
+        }
+        
+        return tags;
     }
 
     private async Task GenerateAndInsertMonitoringDataAsync(MonitoredApplication app)
