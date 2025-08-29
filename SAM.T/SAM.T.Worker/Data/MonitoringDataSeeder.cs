@@ -24,7 +24,7 @@ public class MonitoringDataSeeder(MonitoringContext context)
         ["Region"] = ["US-East", "US-West", "EU-Central", "Asia-Pacific"],
         ["CriticalityLevel"] = ["Critical", "High", "Medium", "Low"],
         ["BusinessUnit"] = ["Sales", "Marketing", "Support", "Analytics", "Core"],
-        ["Env"] = ["env:prod", "env:preprod", "env:staging", "env:dev"]
+        ["Env"] = ["Prod", "Preprod", "Staging", "Dev"]
     };
 
     private record AppThreshold(double DegradedThreshold, double ErrorThreshold);
