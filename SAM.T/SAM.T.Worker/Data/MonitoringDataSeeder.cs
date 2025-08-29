@@ -16,14 +16,15 @@ public class MonitoringDataSeeder(MonitoringContext context)
     private static readonly string[] Features = ["Database", "S3", "Auth API", "Config File", "Third Party API"];
     
     // Tag categories for generating sample tags
-    private static readonly string[] TagCategories = ["Team", "Version", "Region", "CriticalityLevel", "BusinessUnit"];
+    private static readonly string[] TagCategories = ["Team", "Version", "Region", "CriticalityLevel", "BusinessUnit", "Env"];
     private static readonly Dictionary<string, string[]> TagValues = new()
     {
         ["Team"] = ["Backend", "Frontend", "DevOps", "Data", "Security"],
         ["Version"] = ["v1.0", "v1.1", "v1.2", "v2.0", "v2.1"],
         ["Region"] = ["US-East", "US-West", "EU-Central", "Asia-Pacific"],
         ["CriticalityLevel"] = ["Critical", "High", "Medium", "Low"],
-        ["BusinessUnit"] = ["Sales", "Marketing", "Support", "Analytics", "Core"]
+        ["BusinessUnit"] = ["Sales", "Marketing", "Support", "Analytics", "Core"],
+        ["Env"] = ["env:prod", "env:preprod", "env:staging", "env:dev"]
     };
 
     private record AppThreshold(double DegradedThreshold, double ErrorThreshold);
